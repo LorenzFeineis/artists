@@ -7,21 +7,23 @@ import numpy as np
 
 artists_info = pd.read_csv('../datasets_130081_310927_artists.csv')
 
-os.chdir('../resized')
-print(os.getcwd())
-print(len(os.listdir()))
-test = Image.open(os.listdir()[0])
-#test.show()
-images = '../resized'
 
-#print(example)
+os.chdir('../resized') ### working directory is now /resized
+print(os.getcwd())
+print("# of pictures in folder resized:", len(os.listdir()))
+
+
+### Create list of artists
 artists = []
 for artist in artists_info["name"]:
-    artists.append(artist.replace("ü", "u"))
+    artists.append(artist.replace("ü", "ue")) ### replace ü with u because of Dürer
+
+### Create dictionary with keys: artists, values: id
 artist2id = dict(zip(artists,artists_info["id"]))
-print(artist2id.keys())
+print("Artists:", artist2id.keys())
 
-
+### dataset (num_images,2) for each image dataset containes the image as .jpg
+### and the the binary vector with a 1 at the correpsonding index for the artist.
 dataset = []
 label_vector = np.array([0 for artist in artists])
 for image in os.listdir():
@@ -30,7 +32,7 @@ for image in os.listdir():
     for part in parts[1:-1]:
         artist += " " + part
     if artist[0:8] == "Albrecht":
-        artist = "Albrecht Durer"
+        artist = "Albrecht Duerer"
     try:
         label = artist2id[artist]
         labeled_vec = label_vector.copy()
