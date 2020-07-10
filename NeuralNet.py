@@ -86,3 +86,4 @@ class Net(nn.module):
         x8 = self.globalpool(self.relu8(self.conv(x7+self.short3(x5))))
 
         x_out = self.out(self.fcn3(self.relu10(self.fcn2(self.relu9(self.fcn1(x8))))))
+        return x_out
