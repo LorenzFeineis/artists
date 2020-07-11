@@ -12,7 +12,12 @@ from tqdm import tqdm
 
 class ArtistsPaintingsDataset(Dataset):
 
-    def __init__(self, csv_file="../artists_changed.csv", root_dir="../resized", num_paintings=0, transform=None):
+    def __init__(self, csv_file="../artists_changed.csv",
+            root_dir="../resized",
+            num_paintings=0,
+            transform=None,
+            artists=None,
+            artists_idx=None):
         self.artists_info = pd.read_csv(csv_file)
         self.artist2id = dict(zip(self.artists_info["name"], self.artists_info["id"]))
         self.root_dir = root_dir
@@ -30,7 +35,7 @@ class ArtistsPaintingsDataset(Dataset):
             img_names = [image_list[idx]]
         else:
             img_names = image_list[idx]
-        for img_name in tqdm(img_names):
+        for img_name in img_names:
             image = Image.open(self.root_dir+"/"+img_name)
             artist_list = img_name.split("_")
             artist = artist_list[0]
@@ -47,4 +52,4 @@ class ArtistsPaintingsDataset(Dataset):
 
             samples.append(sample)
             targets.append(artist_id)
-        return samples, targets
+        return list(zip(samples, targets))
