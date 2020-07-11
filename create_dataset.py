@@ -27,7 +27,6 @@ class ArtistsPaintingsDataset(Dataset):
             artists_ids = range(len(artists_idx))
             self.artists2id = dict(zip(artists_names,artists_ids))
         elif artists_idx:
-            print("Here we are")
             artists_ids = range(len(artists_idx))
             artists_names = [self.artists_info["name"][idx] for idx in artists_idx]
             self.artists2id = dict(zip(artists_names,artists_ids))
@@ -55,7 +54,7 @@ class ArtistsPaintingsDataset(Dataset):
         else:
             img_names = image_list[idx]
         for img_name in img_names:
-            image = Image.open(self.root_dir+"/"+img_name)
+            image = Image.open(self.root_dir+"/"+img_name).convert('RGB')
             artist_list = img_name.split("_")
             artist = artist_list[0]
             for string in artist_list[1:-1]:
