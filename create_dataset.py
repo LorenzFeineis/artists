@@ -7,8 +7,7 @@ from torchvision import transforms, utils
 from PIL import Image
 from tqdm import tqdm
 
-#artists_info = pd.read_csv("../artists_changed.csv")
-#print(artists_info["name"][19])
+artists_info = pd.read_csv("../artists_changed.csv")
 
 class ArtistsPaintingsDataset(Dataset):
 
@@ -19,16 +18,36 @@ class ArtistsPaintingsDataset(Dataset):
             artists=None,
             artists_idx=None):
         self.artists_info = pd.read_csv(csv_file)
-        self.artist2id = dict(zip(self.artists_info["name"], self.artists_info["id"]))
         self.root_dir = root_dir
         self.transform = transform
-        self.num_paintings = num_paintings
+        ###
+        ### dictionary keys: artists name as string, key: id in range(0,num_artists)
+        if artists and artists_idx: ### if artists and artists_idx is give use artists_idx
+            artists_names = [self.artists_info["name"][idx] for idx in artists_idx]
+            artists_ids = range(len(artists_idx))
+            self.artists2id = dict(zip(artists_names,artists_ids))
+        elif artists_idx:
+            print("Here we are")
+            artists_ids = range(len(artists_idx))
+            artists_names = [self.artists_info["name"][idx] for idx in artists_idx]
+            self.artists2id = dict(zip(artists_names,artists_ids))
+        elif artists:
+            artists_ids  = range(len(artists))
+            self.artists2id = dict(zip(artists,artists_ids))
+
+
+        self.image_list = []
+        for name in self.artists2id.keys():
+            file_start = name.replace(" ","_")
+            for file in os.listdir(self.root_dir):
+                if file.startswith(file_start):
+                    self.image_list.append(file)
+
     def __len__(self):
-        image_list = os.listdir(self.root_dir)
-        return len(image_list)
+        return len(self.image_list)
 
     def __getitem__(self,idx):
-        image_list = os.listdir(self.root_dir)
+        image_list = self.image_list
         samples = []
         targets = []
         if type(idx) != slice:
@@ -43,13 +62,15 @@ class ArtistsPaintingsDataset(Dataset):
                 artist += " "+string
             if artist[0:8] == "Albrecht":
                 artist = "Albrecht Duerer"
-            artist_id = self.artist2id[artist]
+            try:
+                artist_id = self.artists2id[artist]
 
-            sample = image
-            if self.transform:
-                sample = self.transform(image)
-            image.close()
-
-            samples.append(sample)
-            targets.append(artist_id)
+                sample = image
+                if self.transform:
+                    sample = self.transform(image)
+                image.close()
+                samples.append(sample)
+                targets.append(artist_id)
+            except KeyError:
+                pass
         return list(zip(samples, targets))
