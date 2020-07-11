@@ -6,6 +6,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 from PIL import Image
 from tqdm import tqdm
+from sklearn.model_selection import train_test_split
 
 artists_info = pd.read_csv("../artists_changed.csv")
 
@@ -16,7 +17,8 @@ class ArtistsPaintingsDataset(Dataset):
             num_paintings=0,
             transform=None,
             artists=None,
-            artists_idx=None):
+            artists_idx=None,
+            mode = "Train"):
         self.artists_info = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.transform = transform
@@ -40,9 +42,15 @@ class ArtistsPaintingsDataset(Dataset):
             for file in os.listdir(self.root_dir):
                 if file.startswith(file_start):
                     self.image_list.append(file)
-
-
-        image_list = self.image_list
+        
+        self.train_data, self.test_data = train_test_split(self.image_list, train_size = 0.9, random_state=42)
+        if mode == "Train":       
+            self.image_list = self.train_data
+        elif mode == "Test":
+            self.image_list = self.test_data
+        else:
+            print("mode must be \"Train\" or \"Test\"")
+        
         self.samples = []
         self.targets = []
         for img_name in tqdm(self.image_list):
