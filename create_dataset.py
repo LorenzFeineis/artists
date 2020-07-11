@@ -34,7 +34,6 @@ class ArtistsPaintingsDataset(Dataset):
             artists_ids  = range(len(artists))
             self.artists2id = dict(zip(artists,artists_ids))
 
-
         self.image_list = []
         for name in self.artists2id.keys():
             file_start = name.replace(" ","_")
@@ -42,18 +41,11 @@ class ArtistsPaintingsDataset(Dataset):
                 if file.startswith(file_start):
                     self.image_list.append(file)
 
-    def __len__(self):
-        return len(self.image_list)
 
-    def __getitem__(self,idx):
         image_list = self.image_list
-        samples = []
-        targets = []
-        if type(idx) != slice:
-            img_names = [image_list[idx]]
-        else:
-            img_names = image_list[idx]
-        for img_name in img_names:
+        self.samples = []
+        self.targets = []
+        for img_name in tqdm(self.image_list):
             image = Image.open(self.root_dir+"/"+img_name).convert('RGB')
             artist_list = img_name.split("_")
             artist = artist_list[0]
@@ -68,8 +60,17 @@ class ArtistsPaintingsDataset(Dataset):
                 if self.transform:
                     sample = self.transform(image)
                 image.close()
-                samples.append(sample)
-                targets.append(artist_id)
+                self.samples.append(sample)
+                self.targets.append(artist_id)
             except KeyError:
                 pass
-        return list(zip(samples, targets))
+
+    def __len__(self):
+        return len(self.image_list)
+
+    def __getitem__(self,idx):
+        if type(idx)!= slice:
+            targets = [self.targets[idx]]
+        else:
+            targets = self.targets[idx]
+        return list(zip(self.samples[idx], targets))
