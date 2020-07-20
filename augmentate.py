@@ -56,7 +56,7 @@ for image in tqdm(os.listdir()):
 
         w,h = image_jpg.size
         w_crop, h_crop = args.scale
-        if w<w_crop or h<h_crop:
+        if w<=w_crop or h<=h_crop:
             image_jpg = image_jpg.resize(args.scale)
             image_list = [image_jpg]
         else:
