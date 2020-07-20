@@ -8,12 +8,11 @@ from PIL import Image
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 
-artists_info = pd.read_csv("../artists_changed.csv")
 
 class ArtistsPaintingsDataset(Dataset):
 
-    def __init__(self, csv_file="../artists_changed.csv",
-            root_dir="../resized",
+    def __init__(self, csv_file="artists_changed.csv",
+            root_dir="/resized",
             num_paintings=0,
             transform=None,
             artists=None,
@@ -42,15 +41,15 @@ class ArtistsPaintingsDataset(Dataset):
             for file in os.listdir(self.root_dir):
                 if file.startswith(file_start):
                     self.image_list.append(file)
-        
+
         self.train_data, self.test_data = train_test_split(self.image_list, train_size = 0.9, random_state=42)
-        if mode == "Train":       
+        if mode == "Train":
             self.image_list = self.train_data
         elif mode == "Test":
             self.image_list = self.test_data
         else:
             print("mode must be \"Train\" or \"Test\"")
-        
+
         self.samples = []
         self.targets = []
         for img_name in tqdm(self.image_list):
