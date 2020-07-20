@@ -1,5 +1,10 @@
 from augm import get_augmentation
-
+from PIL import Image
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
+import numpy as np
+from tqdm import tqdm
 
 artists_info = pd.read_csv('artists.csv')
 
