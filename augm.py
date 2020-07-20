@@ -102,7 +102,7 @@ def transform_color(dataset):
         return dataset
 
 
-def save_augmentation(dataset, id2artist):
+def save_augmentation(dataset, id2artist,index):
     try:
         os.makedirs(args.aug_images)
     except OSError as e:
@@ -117,11 +117,11 @@ def save_augmentation(dataset, id2artist):
         label = dataset[i]
         i += 1
         name = id2artist[np.argmax(label)]
-        ii += 1
+
         #parts = name.split(" ")
         #for part in parts[1:-1]:
         name = name.replace(" ", "_")
-        name = str(name) + str(ii) + ".jpg"
+        name = str(name) + str(index) + ".jpg"
         img.save(os.path.join(args.aug_images, name))
 
 def transform_format(dataset):
@@ -137,21 +137,10 @@ def transform_format(dataset):
 
     return dataset2
 
-def get_augmentation(dataset, id2artist):
+def get_augmentation(dataset, id2artist,index):
     dataset = augment_dataset(dataset)
     dataset = enhance_dataset(dataset)
-    save_augmentation(dataset, id2artist)
+    save_augmentation(dataset, id2artist,index)
     dataset = transform_format(dataset)
 
     return dataset
-
-if __name__ == '__main__':
-    dataset, id2artist = read_data.load_images()
-    dataset = augment_dataset(dataset)
-    dataset = enhance_dataset(dataset)
-    save_augmentation(dataset, id2artist)
-    dataset = transform_format(dataset)
-
-
-
-
