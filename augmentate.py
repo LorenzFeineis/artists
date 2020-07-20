@@ -28,6 +28,7 @@ id2artist = dict(zip
                  (artists_info["id"], artists))
 
 index = 0
+label_vector = np.array([0 for artist in artists])
 for image in tqdm(os.listdir()):
     index +=1
     parts = image.split("_")
@@ -41,7 +42,7 @@ for image in tqdm(os.listdir()):
         labeled_vec = label_vector.copy()
         labeled_vec[label] = 1
         image_jpg = Image.open(image)
-        dataset=np.array([[image_jpg, labeled_vec]])
+        dataset=np.array([image_jpg, labeled_vec])
         get_augmentation(dataset,id2artist,index)
         image_jpg.close()
 
