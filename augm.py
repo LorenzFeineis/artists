@@ -5,12 +5,12 @@ import numpy as np
 import os, errno
 
 parser = argparse.ArgumentParser(description='arguments for classification')
-parser.add_argument('--aug_images', type=str, default='aug_images', metavar='X', help='image folder')
-parser.add_argument('--scale', type=list, default=(200, 200), metavar='X', help='input layer size')
+parser.add_argument('--aug_images', type=str, default='../aug_images', metavar='X', help='image folder')
+parser.add_argument('--scale', type=list, default=(256, 256), metavar='X', help='input layer size')
 parser.add_argument('--img_process', type=str, default='crop', metavar='X', help='determines how images may be processed')
 parser.add_argument('--crops', type=int, default=4, metavar='X', help='number of crops being taken if img_process = crop')
 parser.add_argument('--color_convert', type=str, default="RGB", metavar='X', help='number of crops being taken if img_process = crop')
-parser.add_argument('--percent_l2_norm', type=float, default=0.3, metavar='X', help='L2 Norm on generated images and origin. Only take this percent range')
+parser.add_argument('--percent_l2_norm', type=float, default=1, metavar='X', help='L2 Norm on generated images and origin. Only take this percent range')
 args = parser.parse_args()
 
 
@@ -118,6 +118,9 @@ def save_augmentation(dataset, id2artist):
         i += 1
         name = id2artist[np.argmax(label)]
         ii += 1
+        #parts = name.split(" ")
+        #for part in parts[1:-1]:
+        name = name.replace(" ", "_")
         name = str(name) + str(ii) + ".jpg"
         img.save(os.path.join(args.aug_images, name))
 

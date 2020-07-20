@@ -3,12 +3,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import numpy as np
+from tqdm import tqdm
 
 def load_images():
     artists_info = pd.read_csv('artists.csv')
 
 
-    os.chdir('resized_small2') ### working directory is now /resized
+    os.chdir('/resized') ### working directory is now /resized
     print(os.getcwd())
 
     print("# of pictures in folder resized:", len(os.listdir()))
@@ -32,7 +33,7 @@ def load_images():
     ### and the the binary vector with a 1 at the correpsonding index for the artist.
     dataset = []
     label_vector = np.array([0 for artist in artists])
-    for image in os.listdir():
+    for image in tqdm(os.listdir()):
         parts = image.split("_")
         artist = parts[0]
         for part in parts[1:-1]:
@@ -44,7 +45,10 @@ def load_images():
             labeled_vec = label_vector.copy()
             labeled_vec[label] = 1
             image_jpg = Image.open(image)
-            dataset.append([image_jpg, labeled_vec])
+            image_array = np.array(image_jpg)
+            image_jpg.close()
+            dataset.append([image_array, labeled_vec])
+
         except KeyError:
             print(artist,"not found in dictionary")
 
