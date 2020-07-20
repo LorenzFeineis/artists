@@ -9,7 +9,7 @@ def load_images():
     artists_info = pd.read_csv('artists.csv')
 
 
-    os.chdir('/resized') ### working directory is now /resized
+    os.chdir('resized') ### working directory is now /resized
     print(os.getcwd())
 
     print("# of pictures in folder resized:", len(os.listdir()))
@@ -45,9 +45,7 @@ def load_images():
             labeled_vec = label_vector.copy()
             labeled_vec[label] = 1
             image_jpg = Image.open(image)
-            image_array = np.array(image_jpg)
-            image_jpg.close()
-            dataset.append([image_array, labeled_vec])
+            dataset.append([image_jpg, labeled_vec])
 
         except KeyError:
             print(artist,"not found in dictionary")
