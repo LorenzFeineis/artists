@@ -71,13 +71,14 @@ def rand_crops(img):
 def augment_dataset(dataset):
     dataset = transform_color([dataset])
     count = np.shape(dataset)[0]
-
+    print("count",count)
+    print(dataset)
     if args.img_process == 'crop':
         dataset2 = []
         for idx in range(count):
-            crops = rand_crops(dataset[idx, :][0])
+            crops = rand_crops(dataset[0])
             for img in crops:
-                dataset2.append([img, dataset[idx, :][1]])
+                dataset2.append([img, dataset[0][0]])
         dataset = dataset2
 
     if args.img_process == 'resize':
@@ -138,7 +139,7 @@ def transform_format(dataset):
     return dataset2
 
 def get_augmentation(dataset, id2artist,index):
-    
+
     w,h,rgb = np.array(dataset[0]).shape
     w_crop, h_crop = args.scale
     if w<w_crop or h<h_crop:

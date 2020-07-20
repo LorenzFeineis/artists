@@ -1,10 +1,23 @@
-from augm import get_augmentation
+from augm import get_augmentation, rand_crops
 from PIL import Image
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
 import numpy as np
 from tqdm import tqdm
+
+import argparse
+import numpy as np
+import errno
+
+parser = argparse.ArgumentParser(description='arguments for classification')
+parser.add_argument('--aug_images', type=str, default='../aug_images', metavar='X', help='image folder')
+parser.add_argument('--scale', type=list, default=(256, 256), metavar='X', help='input layer size')
+parser.add_argument('--img_process', type=str, default='crop', metavar='X', help='determines how images may be processed')
+parser.add_argument('--crops', type=int, default=4, metavar='X', help='number of crops being taken if img_process = crop')
+parser.add_argument('--color_convert', type=str, default="RGB", metavar='X', help='number of crops being taken if img_process = crop')
+parser.add_argument('--percent_l2_norm', type=float, default=1, metavar='X', help='L2 Norm on generated images and origin. Only take this percent range')
+args = parser.parse_args()
 
 artists_info = pd.read_csv('artists.csv')
 
@@ -28,8 +41,8 @@ id2artist = dict(zip
                  (artists_info["id"], artists))
 
 index = 0
-label_vector = np.array([0 for artist in artists])
 for image in tqdm(os.listdir()):
+
     index +=1
     parts = image.split("_")
     artist = parts[0]
@@ -38,12 +51,37 @@ for image in tqdm(os.listdir()):
     if artist[0:8] == "Albrecht":
         artist = "Albrecht Duerer"
     try:
-        label = artist2id[artist]
-        labeled_vec = label_vector.copy()
-        labeled_vec[label] = 1
         image_jpg = Image.open(image)
-        dataset=np.array([image_jpg, labeled_vec])
-        get_augmentation(dataset,id2artist,index)
+
+
+        w,h = image_jpg.size
+        w_crop, h_crop = args.scale
+        if w<w_crop or h<h_crop:
+            image_jpg = image_jpg.resize(args.scale)
+            image_list = [image_jpg]
+        else:
+            image_list = rand_crops(image_jpg)
+
+
+        if args.color_convert == "RGB":
+            if image_jpg.getcolors() != None:
+                image_jpg = image_jpg.convert('RGB')
+
+        elif args.color_convert == "L":
+            if image_jpg.getcolors() == None:
+                image_jpg = image_jpg.convert('L')
+
+
+
+        for img in image_list:
+            vertical = img.transpose(method=Image.FLIP_TOP_BOTTOM)
+            horizontal = img.transpose(method=Image.FLIP_LEFT_RIGHT)
+            name = artist.replace(" ", "_")
+            for save_it in (img,vertical,horizontal):
+                file_name = str(name) +"_"+ str(index) + ".jpg"
+                save_it.save("../aug_images/"+file_name)
+                index +=1
+
         image_jpg.close()
 
     except KeyError:
