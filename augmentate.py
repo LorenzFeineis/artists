@@ -9,7 +9,7 @@ from tqdm import tqdm
 artists_info = pd.read_csv('artists.csv')
 
 
-os.chdir('/resized') ### working directory is now /resized
+os.chdir('resized') ### working directory is now /resized
 print(os.getcwd())
 
 print("# of pictures in folder resized:", len(os.listdir()))
