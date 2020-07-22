@@ -1,2 +1,3 @@
 #ignore the /resized dir. We don't want to add this one
 /resized
+/aug_images
