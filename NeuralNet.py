@@ -8,11 +8,13 @@ def output_size(input_size, kernel_size, stride = 1, padding = 0):
 
 class Net(nn.Module):
     def __init__(self,size=(256,256),norm_size=5, num_classes = 10):
+        self.size = size
         super().__init__()
         ### Args:
         # size = width,height of input image
         # norm_size: amout of neughboriing channels used for normalization
         # num_classes: Number of classes
+
 
         # Input x (3, width, size)
         self.conv1 = nn.Conv2d(in_channels=3,out_channels=12, kernel_size=(7,7),stride=4, padding=3)
@@ -69,7 +71,9 @@ class Net(nn.Module):
         self.out = nn.Softmax(dim = 1)
 
     def forward(self,x):
-        N, C, W, H = x.shape
+        print("shape",x.shape)
+        W, H = self.size
+        print("W,H::",W,H)
         x1 = self.pool1(self.relu1(self.norm1(self.conv1(x))))
 
         x2 = self.relu2(self.norm2(self.conv2(x1)))
