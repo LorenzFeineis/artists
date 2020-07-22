@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 class ArtistsPaintingsDataset(Dataset):
 
     def __init__(self, csv_file="artists_changed.csv",
-            root_dir="/resized",
+            root_dir="resized/",
             num_paintings=0,
             transform=None,
             artists=None,
@@ -52,6 +52,7 @@ class ArtistsPaintingsDataset(Dataset):
 
         self.samples = []
         self.targets = []
+        print("Load data:")
         for img_name in tqdm(self.image_list):
             image = Image.open(self.root_dir+"/"+img_name).convert('RGB')
             artist_list = img_name.split("_")
@@ -80,4 +81,4 @@ class ArtistsPaintingsDataset(Dataset):
             targets = [self.targets[idx]]
         else:
             targets = self.targets[idx]
-        return list(zip(self.samples[idx], targets))
+        return self.samples[idx], targets
