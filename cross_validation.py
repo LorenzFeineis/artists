@@ -54,7 +54,7 @@ for lr in tqdm(np.logspace(-5,1,7)):
                              device = dev)
     ### score is a numpy area with the scores of the classifier on each of the
     ### 10 cross validation set
-    score = cross_val_score(net, x_cv.to(device), y_cv.to(device), cv=10)
+    score = cross_val_score(net, x_cv, y_cv.to(device), cv=10)
     scores.append(scores)
 
 scores = np.array(scores)
