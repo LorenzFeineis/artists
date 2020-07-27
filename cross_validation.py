@@ -10,9 +10,10 @@ from tqdm import tqdm
 from NeuralNet import Net
 
 from sklearn.model_selection import cross_val_predict
-from skorch import NeuralNetClassifier
 from sklearn.model_selection import cross_val_score
 
+from skorch import NeuralNetClassifier
+from skorch.helper import SliceDataset
 ### Transforms the images from the Dataset into torch.tensors()
 transform = transforms.Compose([transforms.ToTensor()])
 
@@ -29,6 +30,9 @@ print(x_cv.shape)
 y_cv = torch.tensor(y_cv)
 print(y_cv.shape)
 
+X = SliceDataset(train_data)
+
+
 if torch.cuda.is_available():
   dev = "cuda:0"
 else:
@@ -43,8 +47,8 @@ scores = []
 for lr in tqdm(np.logspace(-5,1,7)):
     net = Net(size= (256,256), num_classes = 8)
     ### net is the classifier based on our architecture with changing learning rate
-    net = NeuralNetClassifier(net,
-                             max_epochs = 100,
+    sk_net = NeuralNetClassifier(net,
+                             max_epochs = 20,
                              train_split=None,
                              criterion = torch.nn.CrossEntropyLoss,
                              optimizer = torch.optim.SGD,
@@ -54,7 +58,7 @@ for lr in tqdm(np.logspace(-5,1,7)):
                              device = dev)
     ### score is a numpy area with the scores of the classifier on each of the
     ### 20 cross validation set
-    score = cross_val_score(net.to(device), x_cv.to(device), y_cv.to(device), cv=20)
+    score = cross_val_score(sk_net.to(device), X, y_cv.to(device), cv=20)
     scores.append(scores)
 
 scores = np.array(scores)
