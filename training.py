@@ -30,7 +30,7 @@ test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transfor
 print(len(train_data), "train images loaded.")
 print(len(test_data), "test images loaded.")
 
-train_loader = DataLoader(train_data, batch_size=2)
+train_loader = DataLoader(train_data, batch_size=256)
 test_loader = DataLoader(test_data)
 
 
