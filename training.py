@@ -41,7 +41,7 @@ loss = torch.nn.CrossEntropyLoss()
 
 optimizer = torch.optim.SGD(net.parameters(), lr = 1e-5, momentum = 0.9)
 
-for epoch in range(5):
+for epoch in range(2):
     print("epoch:",epoch)
     for batch in tqdm(train_loader):
         x_train, y_train = batch
@@ -54,10 +54,12 @@ for epoch in range(5):
         training_loss.backward()
         optimizer.step()
     net.eval()
-    for batch in test_loader():
+    for batch in test_loader:
         x_test, y_test = batch
         y_test = y_test[0]
         output = net(x_test.to(device))
         test_lost = loss(output.to(device), y_test.to(device))
     print("test_loss:",test_loss)
     print("training loss:", training_loss)
+
+torch.save(net, "model_lr_e-5.pt")
