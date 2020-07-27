@@ -78,17 +78,9 @@ class Net(nn.Module):
         self.out = nn.Softmax(dim = 1).to(self.device)
 
     def forward(self,x):
-
-
         W, H = self.size
         x1 = self.pool1(self.relu1(self.norm1(self.conv1(x.to(self.device)))))
 
-        #x1 = self.conv1(x.to(self.device))
-        #x1 = self.norm1(x)
-        #x1 = self.relu1(x)
-        #x1 = self.pool1(x)
-
-        ####
         x2 = self.relu2(self.norm2(self.conv2(x1)))
 
         x3 = self.relu3(self.conv3(x2))

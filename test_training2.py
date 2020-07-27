@@ -48,12 +48,12 @@ for epoch in range(5):
         x_train.to(device)
         y_train = y_train[0]
         y_train.to(device)
-        
+
         optimizer.zero_grad()
         net.train()
         output = net(x_train)
         output.to(device)
-        training_loss = loss(output, y_train)
+        training_loss = loss(output.to(device), y_train.to(device))
         training_loss.backward()
         optimizer.step()
     print(training_loss)
