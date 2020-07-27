@@ -11,6 +11,13 @@ from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from NeuralNet import Net
 
+if torch.cuda.is_available():
+  dev = "cuda:0"
+else:
+  dev = "cpu"
+device = torch.device(dev)
+print(device)
+
 transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
                                 transforms.ToTensor()])
 
@@ -28,6 +35,7 @@ test_loader = DataLoader(test_data)
 
 
 net = Net(size= (256,256), num_classes = 1)
+net.to(device)
 
 loss = torch.nn.CrossEntropyLoss()
 
@@ -37,11 +45,15 @@ for epoch in range(5):
     print("epoch:",epoch)
     for batch in tqdm(train_loader):
         x_train, y_train = batch
-
+        x_train.to(device)
+        y_train = y_train[0]
+        y_train.to(device)
+        
         optimizer.zero_grad()
         net.train()
         output = net(x_train)
-        training_loss = loss(output, y_train[0])
+        output.to(device)
+        training_loss = loss(output, y_train)
         training_loss.backward()
         optimizer.step()
     print(training_loss)
