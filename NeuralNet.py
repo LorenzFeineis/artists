@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch
 
 def output_size(input_size, kernel_size, stride = 1, padding = 0):
     width, height = input_size
@@ -77,7 +78,7 @@ class Net(nn.Module):
           dev = "cpu"
         device = torch.device(dev)
         x.to(device)
-        
+
         W, H = self.size
         x1 = self.pool1(self.relu1(self.norm1(self.conv1(x))))
 
