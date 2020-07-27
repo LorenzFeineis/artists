@@ -39,7 +39,7 @@ net.to(device)
 
 loss = torch.nn.CrossEntropyLoss()
 
-optimizer = torch.optim.SGD(net.parameters(), lr = 1e-4, momentum = 0.9)
+optimizer = torch.optim.SGD(net.parameters(), lr = 1e-3, momentum = 0.9)
 
 loss_train = []
 loss_test = []
@@ -70,6 +70,6 @@ for epoch in range(1000):
 loss_test = np.array(loss_test)
 loss_train = np.array(loss_train)
 
-np.save("test_loss_e-4.npy", loss_test)
-np.save("train_loss_e-4.npy", loss_train)
-torch.save(net, "model_lr_e-4.pt")
+np.save("test_loss_e-3.npy", loss_test)
+np.save("train_loss_e-3.npy", loss_train)
+torch.save(net, "model_lr_e-3.pt")
