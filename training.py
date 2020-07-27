@@ -25,8 +25,8 @@ transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
 #artists_idx = [8,13,15,16,19,20,22,30,31,32,46]
 artists_idx = [8,15,20,30]
 
-train_data = ArtistsPaintingsDataset(transform = transform, mode="Train", artists_idx=artists_idx)
-test_data = ArtistsPaintingsDataset(transform = transform, mode="Test", artists_idx=artists_idx)
+train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
 print(len(train_data), "train images loaded.")
 print(len(test_data), "test images loaded.")
 
