@@ -32,9 +32,8 @@ print(y_cv.shape)
 
 X = SliceDataset(train_data)
 
-
 if torch.cuda.is_available():
-  dev = "cuda:0"
+  dev = "cuda:2"
 else:
   dev = "cpu"
 device = torch.device(dev)
@@ -44,21 +43,24 @@ print(device)
 scores = []
 
 ### (1e-5,... ,1e1)
-for lr in tqdm(np.logspace(-5,1,7)):
-    net = Net(size= (256,256), num_classes = 8)
+cuda_idx = 0
+for lr in np.logspace(-5,1,7):
+
+    net = Net(size= (256,256), num_classes = 4)
     ### net is the classifier based on our architecture with changing learning rate
     sk_net = NeuralNetClassifier(net.to(device),
-                             max_epochs = 20,
+                             max_epochs = 50,
                              train_split=None,
                              criterion = torch.nn.CrossEntropyLoss,
                              optimizer = torch.optim.SGD,
                              lr = lr,
                              optimizer__momentum = 0.9,
-                             batch_size = 160,
+                             batch_size = 256,
                              device = dev)
     ### score is a numpy area with the scores of the classifier on each of the
     ### 20 cross validation set
-    score = cross_val_score(sk_net, X, y_cv.to(device), cv=20)
+    score = cross_val_score(sk_net, X, y_cv.to(device), cv=3)
+    np.save("cv_scores_lr{}".format(lr), score)
     scores.append(scores)
 
 scores = np.array(scores)
