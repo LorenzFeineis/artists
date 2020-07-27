@@ -17,8 +17,8 @@ from sklearn.model_selection import cross_val_score
 transform = transforms.Compose([transforms.ToTensor()])
 
 ### Indixes of the chosen artists in artists_changed.csv
-artists_idx = [8,13,15,20,30,31,32,46]
-
+###artists_idx = [8,13,15,20,30,31,32,46]
+artists_idx = [8,15,20,30]
 ### The Train Dataset
 train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
 
