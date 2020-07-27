@@ -71,6 +71,13 @@ class Net(nn.Module):
         self.out = nn.Softmax(dim = 1)
 
     def forward(self,x):
+        if torch.cuda.is_available():
+          dev = "cuda:0"
+        else:
+          dev = "cpu"
+        device = torch.device(dev)
+        x.to(device)
+        
         W, H = self.size
         x1 = self.pool1(self.relu1(self.norm1(self.conv1(x))))
 
