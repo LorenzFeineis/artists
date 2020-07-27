@@ -40,7 +40,7 @@ print(device)
 scores = []
 
 ### (1e-5,... ,1e1)
-for lr in tqdm(np.logspace(-5,1,7):
+for lr in tqdm(np.logspace(-5,1,7)):
     net = Net(size= (256,256), num_classes = 8)
     ### net is the classifier based on our architecture with changing learning rate
     net = NeuralNetClassifier(net.to(device),
