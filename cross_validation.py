@@ -43,7 +43,7 @@ scores = []
 for lr in tqdm(np.logspace(-5,1,7)):
     net = Net(size= (256,256), num_classes = 8)
     ### net is the classifier based on our architecture with changing learning rate
-    net = NeuralNetClassifier(net.to(device),
+    net = NeuralNetClassifier(net,
                              max_epochs = 100,
                              train_split=None,
                              criterion = torch.nn.CrossEntropyLoss,
@@ -53,8 +53,8 @@ for lr in tqdm(np.logspace(-5,1,7)):
                              batch_size = 160,
                              device = dev)
     ### score is a numpy area with the scores of the classifier on each of the
-    ### 10 cross validation set
-    score = cross_val_score(net, x_cv, y_cv.to(device), cv=10)
+    ### 20 cross validation set
+    score = cross_val_score(net.to(device), x_cv.to(device), y_cv.to(device), cv=20)
     scores.append(scores)
 
 scores = np.array(scores)
