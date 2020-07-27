@@ -53,13 +53,13 @@ for epoch in range(2):
         training_loss = loss(output.to(device), y_train.to(device))
         training_loss.backward()
         optimizer.step()
+    print("training loss:", training_loss)
     net.eval()
     for batch in test_loader:
         x_test, y_test = batch
         y_test = y_test[0]
         output = net(x_test.to(device))
-        test_lost = loss(output.to(device), y_test.to(device))
-    print("test_loss:",test_loss)
-    print("training loss:", training_loss)
+        test_loss = loss(output.to(device), y_test.to(device))
+    print("test_loss:", test_loss)
 
 torch.save(net, "model_lr_e-5.pt")
