@@ -31,6 +31,13 @@ print(x_cv.shape)
 y_cv = torch.tensor(y_cv)
 print(y_cv.shape)
 
+if torch.cuda.is_available():
+  dev = "cuda:0"
+else:
+  dev = "cpu"
+device = torch.device(dev)
+print(device)
+
 ### will be a list of ouputs from cross_val_score
 scores = []
 
@@ -47,7 +54,7 @@ for lr in np.logspace(-5,1,7):
                              batch_size = 160)
     ### score is a numpy area with the scores of the classifier on each of the
     ### 10 cross validation set
-    score = cross_val_score(net, x_cv, y_cv, cv=10)
+    score = cross_val_score(net.to(device), x_cv.to(device), y_cv.to(device), cv=10)
     scores.append(scores)
 
 scores = np.array(scores)

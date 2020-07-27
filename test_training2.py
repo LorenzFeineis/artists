@@ -45,14 +45,11 @@ for epoch in range(5):
     print("epoch:",epoch)
     for batch in tqdm(train_loader):
         x_train, y_train = batch
-        x_train.to(device)
         y_train = y_train[0]
-        y_train.to(device)
 
         optimizer.zero_grad()
         net.train()
         output = net(x_train)
-        output.to(device)
         training_loss = loss(output.to(device), y_train.to(device))
         training_loss.backward()
         optimizer.step()
