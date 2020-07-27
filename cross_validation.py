@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-import numpy as np
 from PIL import Image
 
 import torchvision
@@ -43,18 +42,20 @@ scores = []
 
 ### (1e-5,... ,1e1)
 for lr in np.logspace(-5,1,7):
+    net = Net(size= (256,256), num_classes = 8)
     ### net is the classifier based on our architecture with changing learning rate
-    net = NeuralNetClassifier(Net(size= (256,256), num_classes = 8),
+    net = NeuralNetClassifier(net.to(device),
                              max_epochs = 100,
                              train_split=None,
                              criterion = torch.nn.CrossEntropyLoss,
                              optimizer = torch.optim.SGD,
                              lr = lr,
                              optimizer__momentum = 0.9,
-                             batch_size = 160)
+                             batch_size = 160,
+                             device = dev)
     ### score is a numpy area with the scores of the classifier on each of the
     ### 10 cross validation set
-    score = cross_val_score(net.to(device), x_cv.to(device), y_cv.to(device), cv=10)
+    score = cross_val_score(net, x_cv.to(device), y_cv.to(device), cv=10)
     scores.append(scores)
 
 scores = np.array(scores)
