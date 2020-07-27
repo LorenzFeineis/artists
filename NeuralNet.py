@@ -83,7 +83,7 @@ class Net(nn.Module):
         W, H = self.size
         # x1 = self.pool1(self.relu1(self.norm1(self.conv1(x))))
 
-        x1.to(self.device) = self.conv1(x)
+        x1 = self.conv1(x.to(self.device))
         x1 = self.norm1(x)
         x1 = self.relu1(x)
         x1 = self.pool1(x)
