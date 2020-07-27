@@ -22,7 +22,7 @@ transform = transforms.Compose([transforms.ToTensor()])
 artists_idx = [8,13,15,20,30,31,32,46]
 
 ### The Train Dataset
-train_data = ArtistsPaintingsDataset(rootdir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
 
 ### adjusting the tensors for the cross validation
 x_cv, y_cv = train_data.samples, train_data.targets
