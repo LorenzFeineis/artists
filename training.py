@@ -51,7 +51,6 @@ for epoch in range(5):
         net.train()
         output = net(x_train.to(device))
         training_loss = loss(output.to(device), y_train.to(device))
-        print("training loss:", training_loss)
         training_loss.backward()
         optimizer.step()
     net.eval()
@@ -61,3 +60,4 @@ for epoch in range(5):
         output = net(x_test.to(device))
         test_lost = loss(output.to(device), y_test.to(device))
     print("test_loss:",test_loss)
+    print("training loss:", training_loss)
