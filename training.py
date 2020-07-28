@@ -43,7 +43,6 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
     loss_train = []
     loss_test = []
 
-
     print("Where am I?")
     for epoch in range(num_epochs):
         print("epoch:",epoch)
@@ -59,12 +58,13 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
             optimizer.step()
         print("training loss:", training_loss)
         loss_train.append(training_loss)
+
         net.eval()
         for batch in test_loader:
             x_test, y_test = batch
             y_test = y_test[0]
-            output = net(x_test.to(device))
-            test_loss = loss(output.to(device), y_test.to(device))
+            test_output = net(x_test.to(device))
+            test_loss = loss(test_output.to(device), y_test.to(device))
         print("test_loss:", test_loss)
         loss_test.append(test_loss)
 
@@ -82,7 +82,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
                 accuracy[1].append(test_accuracy)
                 np.save(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)), np.array(accuracy))
     if create_output:
-        torch.save(net, name+"model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
+        torch.save(net, name+"_model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
     training(name = "TEST", cuda=0, batch_size=16, num_epochs=4, lr=1e-4, create_output = True)
