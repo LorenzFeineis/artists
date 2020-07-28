@@ -1,3 +1,5 @@
 import numpy as np
 
-np.save("Some_Output.npy", np.arange(20))
+if __name__ == "__main__":
+    np.save("Some_Output.npy", np.arange(20))
+    print("yoyoyo")
