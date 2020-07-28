@@ -54,7 +54,8 @@ def performance(lr="e-5"):
         #print("labels",y_test.data)
         #print(prediction)
         #print(y_test.cpu().detach().numpy())
-        accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-prediction)
+        if test_output.cpu().detach().numpy()==prediction:
+            accuracy += 1
         print(accuracy)
     print((len(test_data)-accuracy)/len(test_data))
     #dataiter = iter(test_loader)
