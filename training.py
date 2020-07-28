@@ -27,8 +27,8 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
     #artists_idx = [8,13,15,16,19,20,22,30,31,32,46]
     artists_idx = [8,15,20,30]
 
-    train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
-    test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
+    train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
+    test_data = ArtistsPaintingsDataset(ttransform = transform, mode="Test")
     print(len(train_data), "train images loaded.")
     print(len(test_data), "test images loaded.")
 
