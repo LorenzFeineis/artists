@@ -15,6 +15,8 @@ class ArtistsPaintingsDataset(Dataset):
         self.transform = transform
         ###
         ### dictionary keys: artists name as string, key: id in range(0,num_artists)
+        self.artists_info = pd.read_csv("artists_changed.csv")
+
         artists_ids = range(len(artists_idx))
         artists_names = [self.artists_info["name"][idx] for idx in artists_idx]
         self.artists2id = dict(zip(artists_names,artists_ids))
