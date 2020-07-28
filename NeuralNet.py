@@ -11,7 +11,7 @@ class Net(nn.Module):
     def __init__(self,size=(256,256),norm_size=5, num_classes = 10,cuda = "0"):
         self.size = size
         if torch.cuda.is_available():
-          dev = "cuda:{}"+ str(cuda)
+          dev = "cuda:"+ str(cuda)
         else:
           dev = "cpu"
         self.device = torch.device(dev)
