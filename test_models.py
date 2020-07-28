@@ -16,13 +16,13 @@ transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
 
 artists_idx = [8,15,20,30]
 
-train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
-test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
-print(len(train_data), "train images loaded.")
-print(len(test_data), "test images loaded.")
+#train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+#test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
+#print(len(train_data), "train images loaded.")
+#print(len(test_data), "test images loaded.")
 
-train_loader = DataLoader(train_data)
-test_loader = DataLoader(test_data)
+#train_loader = DataLoader(train_data)
+#test_loader = DataLoader(test_data)
 
 model = torch.load("model_lr_e-4.pt")
 
