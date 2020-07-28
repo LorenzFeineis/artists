@@ -69,21 +69,19 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
         loss_test.append(test_loss)
 
         accuracy = [[],[]]
-        if output and (epochs+1)%2 == 0:
-            loss_test = np.array(loss_test)
-            loss_train = np.array(loss_train)
-            np.save(name+"_test_loss_{}.npy".format(str(lr)), loss_test)
-            np.save(name+"_train_loss_{}.npy".format(str(lr)), loss_train)
-            ####
-            ####
-            data = test_data, test_loader, train_data, train_loader
-            train_accuracy, test_accuracy = performance(lr=lr,model = net, data=data)
-            accuracy[0].append(train_accuracy)
-            accuracy[1].append(test_accuracy)
-            np.save(name+"accuracy_lr_{},batch_{}.npy".format(str(lr),str(batch_size)), accuracy)
-            ###
-            ###
-            ###
+        if output:
+            if (epoch+1)%2 == 0:
+                loss_test = np.array(loss_test)
+                loss_train = np.array(loss_train)
+                np.save(name+"_test_loss_{}.npy".format(str(lr)), loss_test)
+                np.save(name+"_train_loss_{}.npy".format(str(lr)), loss_train)
+
+                data = test_data, test_loader, train_data, train_loader
+                train_accuracy, test_accuracy = performance(lr=lr,model = net, data=data)
+                accuracy[0].append(train_accuracy)
+                accuracy[1].append(test_accuracy)
+                np.save(name+"accuracy_lr_{},batch_{}.npy".format(str(lr),str(batch_size)), accuracy)
+
 
     loss_test = np.array(loss_test)
     loss_train = np.array(loss_train)
