@@ -77,7 +77,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
                 np.save(name+"_train_loss_{}.npy".format(str(lr)), loss_train)
 
                 data = test_data, test_loader, train_data, train_loader
-                train_accuracy, test_accuracy = performance(lr=lr,model = net, data=data)
+                train_accuracy, test_accuracy = performance(lr=lr,load_model=net, data=data)
                 accuracy[0].append(train_accuracy)
                 accuracy[1].append(test_accuracy)
                 np.save(name+"accuracy_lr_{},batch_{}.npy".format(str(lr),str(batch_size)), accuracy)
