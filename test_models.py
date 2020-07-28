@@ -55,7 +55,7 @@ def performance(lr="e-5"):
         #print("labels",y_test.data)
         print(prediction)
         print(ground_truth)
-        if ground_truth[0]==prediction
+        if ground_truth[0]==prediction:
             accuracy += 1
         print(accuracy)
     print(accuracy/len(test_data))
