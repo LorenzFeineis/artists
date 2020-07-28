@@ -52,8 +52,8 @@ def performance(lr="e-5"):
         prediction = np.argmax(test_output.cpu().detach().numpy())
         #print("output",test_output)
         #print("labels",y_test.data)
-        print(prediction)
-        print(y_test.cpu().detach().numpy())
+        #print(prediction)
+        #print(y_test.cpu().detach().numpy())
         accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-prediction)
 
     print(accuracy/len(test_data))
