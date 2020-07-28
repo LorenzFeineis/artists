@@ -34,36 +34,31 @@ def performance(lr="e-5"):
 
     artists_idx = [8,15,20,30]
 
-    #train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
     test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
-    #print(len(train_data), "train images loaded.")
-    print(len(test_data), "test images loaded.")
-
-    #train_loader = DataLoader(train_data)
     test_loader = DataLoader(test_data,batch_size=1)
-
-    #train_labels = torch.tensor(train_data.targets)
-    test_labels = torch.tensor(test_data.targets)
-    accuracy = 0
+    test_accuracy = 0
     for batch in tqdm(test_loader):
         x_test, y_test = batch
         y_test = y_test[0]
         test_output = model(x_test)
         prediction = np.argmax(test_output.cpu().detach().numpy())
         ground_truth = y_test.cpu().detach().numpy()
-        #print("output",test_output)
-        #print("labels",y_test.data)
-        print(prediction)
-        print(ground_truth)
         if ground_truth[0]==prediction:
-            accuracy += 1
-        print(accuracy)
-    print(accuracy/len(test_data))
-    #dataiter = iter(test_loader)
-    #images, labels = dataiter.next()
-    #print(images.shape)
-    #test_output = model(images)
-    #print(test_output.shape)
+            test_accuracy += 1
+    print(test_accuracy/len(test_data))
+
+    train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+    train_loader = DataLoader(train_data)
+    train_accuracy = 0
+    for batch in tqdm(train_loader):
+        x_train, y_train = batch
+        y_train = y_train[0]
+        train_output = model(x_train)
+        prediction = np.argmax(train_output.cpu().detach().numpy())
+        ground_truth = y_train.cpu().detach().numpy()
+        if ground_truth[0]==prediction:
+            train_accuracy += 1
+    print(train_accuracy/len(train_data))
 
 if __name__ == "__main__":
     #plot_losses()
