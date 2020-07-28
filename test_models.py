@@ -57,5 +57,5 @@ def performance():
     print(test_output.shape)
 
 if __name__ == "__main__":
-    #plot_losses()
+    plot_losses()
     performance()
