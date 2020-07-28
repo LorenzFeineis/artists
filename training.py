@@ -33,12 +33,13 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
     print("Do I load the data?")
 
     net = Net(size= (256,256), num_classes = 4,cuda = cuda)
+    print("Problem after defining net")
     net.to(device)
-
+    print("After sending net to device")
     loss = torch.nn.CrossEntropyLoss()
-
+    print("after defining loss")
     optimizer = torch.optim.SGD(net.parameters(), lr = lr, momentum = 0.9)
-
+    print("after defining optimizer")
     loss_train = []
     loss_test = []
 
