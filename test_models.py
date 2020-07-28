@@ -50,14 +50,15 @@ def performance(lr="e-5"):
         y_test = y_test[0]
         test_output = model(x_test)
         prediction = np.argmax(test_output.cpu().detach().numpy())
+        ground_truth = test_output.cpu().detach().numpy()
         #print("output",test_output)
         #print("labels",y_test.data)
-        #print(prediction)
-        #print(y_test.cpu().detach().numpy())
-        if np.array([test_output.cpu().detach().numpy()==prediction]).any:
+        print(prediction)
+        print(ground_truth)
+        if np.array([ground_truth==prediction]).all:
             accuracy += 1
         print(accuracy)
-    print((len(test_data)-accuracy)/len(test_data))
+    print(accuracy/len(test_data))
     #dataiter = iter(test_loader)
     #images, labels = dataiter.next()
     #print(images.shape)
