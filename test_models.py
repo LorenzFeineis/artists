@@ -50,7 +50,7 @@ def performance(lr="e-5"):
         y_test = y_test[0]
         test_output = model(x_test)
         prediction = np.argmax(test_output.cpu().detach().numpy())
-        ground_truth = test_output.cpu().detach().numpy()
+        ground_truth = y_test.cpu().detach().numpy()
         #print("output",test_output)
         #print("labels",y_test.data)
         print(prediction)
