@@ -79,7 +79,7 @@ for image in tqdm(os.listdir()):
             name = artist.replace(" ", "_")
             for save_it in (img,vertical,horizontal):
                 file_name = str(name) +"_"+ str(index) + ".jpg"
-                save_it.save("../aug_images/"+file_name)
+                save_it.save("../train_aug_images/"+file_name)
                 index +=1
 
         image_jpg.close()
