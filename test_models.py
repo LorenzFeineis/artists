@@ -83,7 +83,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         train_accuracy += len(prediction)- np.count_nonzero(prediction-ground_truth)
 
 
-    return train_accuracy/len(train_data), test_accuracy//len(test_data)
+    return train_accuracy/len(train_data), test_accuracy/len(test_data)
 
 if __name__ == "__main__":
     #plot_losses()
