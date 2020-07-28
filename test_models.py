@@ -76,7 +76,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         y_train = y_train[0]
         train_output = model(x_train)
         print("training output", train_output.cpu().detach().numpy())
-        prediction = np.argmax(train_output.cpu().detach().numpy(),axis = 0)
+        prediction = np.argmax(train_output.cpu().detach().numpy(),axis = 1)
         ground_truth = y_train.cpu().detach().numpy()
         print("prediction:", prediction)
         print("ground truth:", ground_truth)
