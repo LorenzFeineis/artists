@@ -94,5 +94,5 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
         torch.save(net, name+"_model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
-    #training(name = "NoSG1", cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
-    training(name = "TEST", SG=True, cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
+    training(name = "NoSG1", cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
+    #training(name = "SG1", SG=True, cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
