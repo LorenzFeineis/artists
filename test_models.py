@@ -63,7 +63,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
     artists_idx = [8,15,20,30]
 
     test_accuracy = 0
-    for batch in tqdm(test_loader):
+    for batch in test_loader:
         x_test, y_test = batch
         y_test = y_test[0]
         test_output = model(x_test)
@@ -73,7 +73,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
             test_accuracy += 1
 
     train_accuracy = 0
-    for batch in tqdm(train_loader):
+    for batch in train_loader:
         x_train, y_train = batch
         y_train = y_train[0]
         train_output = model(x_train)
