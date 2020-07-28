@@ -21,14 +21,14 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
     transform = transforms.ToTensor()
 
-    artists_idx = [8,15,20,30]
+    #artists_idx = [8,15,20,30]
 
     train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
     test_data = ArtistsPaintingsDataset(transform = transform, mode="Test")
     print(len(train_data), "train images loaded.")
     print(len(test_data), "test images loaded.")
 
-    train_loader = DataLoader(train_data, batch_size=batch_size)
+    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_data)
 
     net = Net(size= (256,256), num_classes = 4,cuda = str(cuda))
