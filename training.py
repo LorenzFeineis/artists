@@ -30,6 +30,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
 
     train_loader = DataLoader(train_data, batch_size=batch_size)
     test_loader = DataLoader(test_data)
+    print("Do I load the data?")
 
     net = Net(size= (256,256), num_classes = 4)
     net.to(device)
