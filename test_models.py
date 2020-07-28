@@ -22,7 +22,7 @@ transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
 
 
 
-def plot_losses(lr=e-5):
+def plot_losses(lr="e-5"):
     test_loss = np.load("test_loss_{}.npy".format(lr),allow_pickle=True)
     train_loss = np.load("train_loss_{}.npy", allow_pickle=True)
 
@@ -34,7 +34,7 @@ def plot_losses(lr=e-5):
     axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
     plt.savefig("losses_{}.png")
 
-def performance(lr=e-5):
+def performance(lr="e-5"):
     model = torch.load("model_lr_{}.pt".format(lr))
     model.eval()
 
@@ -59,4 +59,4 @@ def performance(lr=e-5):
 
 if __name__ == "__main__":
     #plot_losses()
-    performance(lr=e-4)
+    performance(lr="e-4")
