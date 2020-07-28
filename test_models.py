@@ -44,13 +44,16 @@ def performance(lr="e-5"):
 
     #train_labels = torch.tensor(train_data.targets)
     test_labels = torch.tensor(test_data.targets)
+    accuracy = 0
     for batch in tqdm(test_loader):
         x_test, y_test = batch
         y_test = y_test[0]
         test_output = model(x_test)
-        print("output",test_output)
-        print("labels",y_test.data)
-        accuracy = np.count_nonzero(test_output.cpu().detach().numpy()-y_test.cpu().detach().numpy())
+        #print("output",test_output)
+        #print("labels",y_test.data)
+        accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-y_test.cpu().detach().numpy())
+
+    print(accuracy/len(test_data))
     #dataiter = iter(test_loader)
     #images, labels = dataiter.next()
     #print(images.shape)
