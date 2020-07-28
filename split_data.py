@@ -27,13 +27,13 @@ for name in artists2id.keys():
 train_data, test_data = train_test_split(image_list, train_size = 0.9, random_state=42)
 
 for train_file in tqdm(train_data):
-    img = Image.open(train_file)
+    img = Image.open("aug_images/"+train_file)
     img.save("train_set/{}".format(train_file))
     img.close()
 print("trainings data saved to train_set/")
 
 for test_file in tqdm(test_data):
-    img = Image.open(test_file)
+    img = Image.open("aug_images/"+test_file)
     img.save("test_set/{}".format(test_file))
     img.close()
 print("test data saved to test_set/")
