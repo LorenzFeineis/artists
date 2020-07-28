@@ -66,11 +66,8 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         x_test, y_test = batch
         y_test = y_test[0]
         test_output = model(x_test)
-        print("test output", test_output.cpu().detach().numpy())
         prediction = np.argmax(test_output.cpu().detach().numpy(),axis = 1)
         ground_truth = y_test.cpu().detach().numpy()
-        print("prediction:", prediction)
-        print("ground truth:", ground_truth)
         test_accuracy += len(prediction)- np.count_nonzero(prediction-ground_truth)
 
     train_accuracy = 0
