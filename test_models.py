@@ -57,10 +57,8 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         model = torch.load("model_lr_{}.pt".format(lr))
     else:
         model = load_model
-
+        
     model.eval()
-
-    artists_idx = [8,15,20,30]
 
     test_accuracy = 0
     for batch in test_loader:
@@ -82,7 +80,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         if ground_truth[0]==prediction:
             train_accuracy += 1
 
-    return train_accuracy/len(test_data), test_accuracy//len(train_data)
+    return train_accuracy/len(train_data), test_accuracy//len(test_data)
 
 if __name__ == "__main__":
     #plot_losses()
