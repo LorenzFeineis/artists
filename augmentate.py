@@ -22,10 +22,10 @@ args = parser.parse_args()
 artists_info = pd.read_csv('artists.csv')
 
 
-os.chdir('resized') ### working directory is now /resized
+os.chdir('train_set') ### working directory is now /resized
 print(os.getcwd())
 
-print("# of pictures in folder resized:", len(os.listdir()))
+print("# of pictures in folder train_set:", len(os.listdir()))
 
 
 ### Create list of artists
