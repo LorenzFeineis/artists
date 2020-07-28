@@ -28,14 +28,39 @@ def plot_losses(lr="e-5"):
     axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
     plt.savefig("losses_{}.png")
 
-def performance(lr="e-5"):
-    model = torch.load("model_lr_{}.pt".format(lr))
+
+def load_data(Train=True, Test = True):
+    if Test:
+        test_data = ArtistsPaintingsDataset(root_dir="test_aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
+        test_loader = DataLoader(test_data,batch_size=1)
+
+    if Train:
+    train_data = ArtistsPaintingsDataset(root_dir="train_aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+    train_loader = DataLoader(train_data)
+
+    if Test and Train:
+        return test_data, test_loader, train_data, train_loader
+    elif Test:
+        return test_data,test_loader, None, None
+    elif Train:
+        return train_data, train_loader, None,None
+
+
+
+def performance(lr="e-5", model = None, data = "Load"):
+    if data=="Load":
+        test_data, test_loader, train_data, train_loader = load_data()
+    else:
+        data = data
+    if load==None:
+        model = torch.load("model_lr_{}.pt".format(lr))
+    else:
+        model = model
+
     model.eval()
 
     artists_idx = [8,15,20,30]
 
-    test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
-    test_loader = DataLoader(test_data,batch_size=1)
     test_accuracy = 0
     for batch in tqdm(test_loader):
         x_test, y_test = batch
@@ -45,10 +70,7 @@ def performance(lr="e-5"):
         ground_truth = y_test.cpu().detach().numpy()
         if ground_truth[0]==prediction:
             test_accuracy += 1
-    print(test_accuracy/len(test_data))
 
-    train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
-    train_loader = DataLoader(train_data)
     train_accuracy = 0
     for batch in tqdm(train_loader):
         x_train, y_train = batch
@@ -58,7 +80,8 @@ def performance(lr="e-5"):
         ground_truth = y_train.cpu().detach().numpy()
         if ground_truth[0]==prediction:
             train_accuracy += 1
-    print(train_accuracy/len(train_data))
+
+    return train_accuracy/len(test_data), test_accuracy//len(train_data)
 
 if __name__ == "__main__":
     #plot_losses()
