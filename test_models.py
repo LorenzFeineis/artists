@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import torchvision
 from torchvision import transforms, utils
 
-from create_dataset import ArtistsPaintingsDataset
+from dataset import ArtistsPaintingsDataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 
