@@ -54,7 +54,7 @@ def performance():
     dataiter = iter(test_loader)
     images, labels = dataiter.next()
     test_output = model(images)
-    print(test_output.shape)
+    print(test_output[0,:])
 
 if __name__ == "__main__":
     plot_losses()
