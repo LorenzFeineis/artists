@@ -76,10 +76,12 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         y_train = y_train[0]
         train_output = model(x_train)
         print("training output", train_output.cpu().detach().numpy())
-        prediction = np.argmax(train_output.cpu().detach().numpy())
+        prediction = np.argmax(train_output.cpu().detach().numpy(),axis = 0)
         ground_truth = y_train.cpu().detach().numpy()
         print("prediction:", prediction)
         print("ground truth:", ground_truth)
+        train_accuracy += len(prediction)- np.count_nonzero(prediction-ground_truth)
+
         if ground_truth[0]==prediction:
             train_accuracy += 1
 
