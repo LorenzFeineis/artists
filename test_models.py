@@ -38,5 +38,5 @@ def plot_losses():
     plt.savefig("losses_e-4.png")
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     plot_losses()
