@@ -2,7 +2,8 @@
 from PIL import Image
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
-
+import pandas as pd
+import os
 
 root_dir = "aug_images/"
 csv_file = "artists_changed.csv"
