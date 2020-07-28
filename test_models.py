@@ -35,8 +35,9 @@ def plot_losses():
     fig, axis = plt.subplots(ncols = 2)
 
     axis[0].plot(test_loss)
-    axis[0].plot(train_loss)
-
+    axis[0].set(title = "test loss",xlabel="epochs", ylabel="CELoss")
+    axis[1].plot(train_loss)
+    axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
     plt.savefig("losses_e-4.png")
 
 
