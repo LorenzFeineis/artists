@@ -30,20 +30,16 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
     train_loader = DataLoader(train_data, batch_size=batch_size)
     test_loader = DataLoader(test_data)
-    print("Do I load the data?")
 
     net = Net(size= (256,256), num_classes = 4,cuda = str(cuda))
-    print("Problem after defining net")
     net.to(device)
-    print("After sending net to device")
+
     loss = torch.nn.CrossEntropyLoss()
-    print("after defining loss")
     optimizer = torch.optim.SGD(net.parameters(), lr = lr, momentum = 0.9)
-    print("after defining optimizer")
+
     loss_train = []
     loss_test = []
 
-    print("Where am I?")
     for epoch in range(num_epochs):
         print("epoch:",epoch)
         train_loss = 0
