@@ -1,19 +1,27 @@
 from torchvision import transforms, utils
-from create_dataset import ArtistsPaintingsDataset
+from dataset import ArtistsPaintingsDataset
 from torch.utils.data import Dataset, DataLoader
 
-transform = transforms.Compose([transforms.CenterCrop(size=(64,64)),
-                                transforms.Grayscale(num_output_channels=3),
+transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
                                 transforms.ToTensor()])
-data = ArtistsPaintingsDataset(transform = transform)
 
 
+artists_idx = [8,13,15,16,19,20,22,30,31,32,46]
 
-#example = data[0:10]
-#print(example)
+artists_idx = [1,2]
 
-data_loader = DataLoader(data, batch_size=1000)
+train_data = ArtistsPaintingsDataset(transform = transform, mode="Train", artists_idx=artists_idx)
+test_data = ArtistsPaintingsDataset(transform = transform, mode="Test", artists_idx=artists_idx)
+print(len(train_data), "train images loaded.")
+print(len(test_data), "test images loaded.")
 
-for i,sample in enumerate(data_loader):
-    print(sample[0][0].shape)
-    print(sample[0][1].shape)
+train_loader = DataLoader(train_data, batch_size=2)
+test_loader = DataLoader(test_data)
+
+
+for i,sample in enumerate(train_loader):
+    if i ==0:
+        print(sample)
+        x,y = sample[0]
+        print(x.shape)
+        print(y.shape)
