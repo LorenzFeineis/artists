@@ -5,13 +5,13 @@ from PIL import Image
 import torchvision
 from torchvision import transforms, utils
 
-from dataset import ArtistsPaintingsDataset
+from dataset import ArtistsPaintingsDataset, SinGanData
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from test_models import performance
 from NeuralNet import Net
 
-def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, create_output = True):
+def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, create_output = True, SG = False):
     if torch.cuda.is_available():
       dev = "cuda:" + str(cuda)
     else:
@@ -23,8 +23,12 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
     #artists_idx = [8,15,20,30]
 
-    train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
-    test_data = ArtistsPaintingsDataset(transform = transform, mode="Test")
+    if SG:
+        train_data = SinGanData(transform = transform, mode="Train")
+        test_data = SinGanData(transform = transform, mode="Test")
+    else:
+        train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
+        test_data = ArtistsPaintingsDataset(transform = transform, mode="Test")
     print(len(train_data), "train images loaded.")
     print(len(test_data), "test images loaded.")
 
@@ -75,7 +79,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
         accuracy = [[],[]]
         if create_output:
-            if (epoch+1)%2 == 0:
+            if (epoch+1)%50 == 0:
                 np.save(name+"_test_loss_{}.npy".format(str(lr)), np.array(loss_test))
                 np.save(name+"_train_loss_{}.npy".format(str(lr)), np.array(loss_train))
 
@@ -90,4 +94,5 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
         torch.save(net, name+"_model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
-    training(name = "TEST", cuda=0, batch_size=16, num_epochs=4, lr=1e-4, create_output = True)
+    #training(name = "NoSG1", cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
+    training(name = "TEST", SG=True, cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
