@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import os
 
-root_dir = "aug_images/"
+root_dir = "resized/"
 csv_file = "artists_changed.csv"
 
 
