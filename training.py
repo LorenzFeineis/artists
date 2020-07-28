@@ -8,7 +8,8 @@ from torchvision import transforms, utils
 from dataset import ArtistsPaintingsDataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
-import test_models
+from test_models import performance
+from NeuralNet import Net
 
 def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, output = True):
     if torch.cuda.is_available():
