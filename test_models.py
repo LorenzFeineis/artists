@@ -62,4 +62,4 @@ def performance(lr="e-5"):
 
 if __name__ == "__main__":
     #plot_losses()
-    performance(lr="e-4")
+    performance(lr="e-5")
