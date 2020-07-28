@@ -28,3 +28,15 @@ model = torch.load("model_lr_e-4.pt")
 
 test_loss = np.load("test_loss_e-4.npy",allow_pickle=True)
 train_loss = np.load("train_loss_e-4.npy", allow_pickle=True)
+
+def plot_losses():
+    fig, axis = plt.subplot(ncols = 2)
+
+    axis[0].plot(test_loss.values())
+    axis[0].plot(train_loss.values())
+
+    plt.savefig("losses_e-4.png")
+
+
+if __name__ = "__main__":
+    plot_losses()
