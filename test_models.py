@@ -49,7 +49,7 @@ def performance(lr="e-5"):
         y_test = y_test[0]
         test_output = model(x_test)
         print("output",test_output)
-        print("labels",y_test.value)
+        print("labels",y_test.data)
         accuracy = np.count_nonzero(test_output.cpu()-y_test.cpu())
     #dataiter = iter(test_loader)
     #images, labels = dataiter.next()
