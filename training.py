@@ -32,7 +32,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
     test_loader = DataLoader(test_data)
     print("Do I load the data?")
 
-    net = Net(size= (256,256), num_classes = 4)
+    net = Net(size= (256,256), num_classes = 4,cuda = cuda)
     net.to(device)
 
     loss = torch.nn.CrossEntropyLoss()
