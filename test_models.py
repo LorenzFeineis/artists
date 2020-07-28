@@ -22,9 +22,9 @@ transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
 
 
 
-def plot_losses():
-    test_loss = np.load("test_loss_e-5.npy",allow_pickle=True)
-    train_loss = np.load("train_loss_e-5.npy", allow_pickle=True)
+def plot_losses(lr=e-5):
+    test_loss = np.load("test_loss_{}.npy".format(lr),allow_pickle=True)
+    train_loss = np.load("train_loss_{}.npy", allow_pickle=True)
 
     fig, axis = plt.subplots(ncols = 2)
 
@@ -32,10 +32,10 @@ def plot_losses():
     axis[0].set(title = "test loss",xlabel="epochs", ylabel="CELoss")
     axis[1].plot(train_loss)
     axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
-    plt.savefig("losses_e-5.png")
+    plt.savefig("losses_{}.png")
 
-def performance():
-    model = torch.load("model_lr_e-4.pt")
+def performance(lr=e-5):
+    model = torch.load("model_lr_{}.pt".format(lr))
     model.eval()
 
     artists_idx = [8,15,20,30]
@@ -53,9 +53,10 @@ def performance():
 
     dataiter = iter(test_loader)
     images, labels = dataiter.next()
+    print(images.shape)
     test_output = model(images)
-    print(test_output[0,:])
+    print(test_output[])
 
 if __name__ == "__main__":
-    plot_losses()
-    performance()
+    #plot_losses()
+    performance(lr=e-4)
