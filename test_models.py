@@ -49,11 +49,12 @@ def performance(lr="e-5"):
         x_test, y_test = batch
         y_test = y_test[0]
         test_output = model(x_test)
+        prediction = np.argmax(test_output.cpu().detach().numpy())
         #print("output",test_output)
         #print("labels",y_test.data)
-        print(test_output.cpu().detach().numpy())
+        print(prediction)
         print(y_test.cpu().detach().numpy())
-        accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-y_test.cpu().detach().numpy())
+        accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-prediction)
 
     print(accuracy/len(test_data))
     #dataiter = iter(test_loader)
