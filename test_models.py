@@ -40,18 +40,18 @@ def performance():
 
     artists_idx = [8,15,20,30]
 
-    train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+    #train_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
     test_data = ArtistsPaintingsDataset(root_dir="aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
-    print(len(train_data), "train images loaded.")
+    #print(len(train_data), "train images loaded.")
     print(len(test_data), "test images loaded.")
 
-    train_loader = DataLoader(train_data)
+    #train_loader = DataLoader(train_data)
     test_loader = DataLoader(test_data)
 
-    train_labels = torch.tensor(train_data)
-    test_labels = torch.tensor(test_data)
+    #train_labels = torch.tensor(train_data.targets)
+    test_labels = torch.tensor(test_data.targets)
 
-    dataiter = iter(train_loader)
+    dataiter = iter(test_loader)
     images, labels = dataiter.next()
 
 if __name__ == "__main__":
