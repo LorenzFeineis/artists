@@ -71,22 +71,18 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
         accuracy = [[],[]]
         if create_output:
             if (epoch+1)%2 == 0:
-                loss_test = np.array(loss_test)
-                loss_train = np.array(loss_train)
-                np.save(name+"_test_loss_{}.npy".format(str(lr)), loss_test)
-                np.save(name+"_train_loss_{}.npy".format(str(lr)), loss_train)
+                np.save(name+"_test_loss_{}.npy".format(str(lr)), np.array(loss_test))
+                np.save(name+"_train_loss_{}.npy".format(str(lr)), np.array(loss_train))
 
                 data = test_data, test_loader, train_data, train_loader
                 train_accuracy, test_accuracy = performance(lr=lr,load_model=net, data=data)
+                print("Train accuracy:", train_accuracy)
+                print("Test accuracy:", test_accuracy)
                 accuracy[0].append(train_accuracy)
                 accuracy[1].append(test_accuracy)
-                np.save(name+"accuracy_lr_{},batch_{}.npy".format(str(lr),str(batch_size)), accuracy)
-
-
-    loss_test = np.array(loss_test)
-    loss_train = np.array(loss_train)
-    if output:
+                np.save(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)), np.array(accuracy))
+    if create_output:
         torch.save(net, name+"model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
-    training(name = "TEST", cuda=0, batch_size=16, num_epochs=10, lr=1e-4, create_output = True)
+    training(name = "TEST", cuda=0, batch_size=16, num_epochs=4, lr=1e-4, create_output = True)
