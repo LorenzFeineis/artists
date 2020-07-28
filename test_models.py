@@ -47,15 +47,16 @@ def load_data(Train=True, Test = True):
 
 
 
-def performance(lr="e-5", model = None, data = "Load"):
+def performance(lr="e-5", load_model = None, data = "Load"):
     if data=="Load":
         test_data, test_loader, train_data, train_loader = load_data()
     else:
-        data = data
-    if load==None:
+        test_data, test_loader, train_data, train_loader = data
+
+    if load_model==None:
         model = torch.load("model_lr_{}.pt".format(lr))
     else:
-        model = model
+        model = load_model
 
     model.eval()
 
