@@ -11,7 +11,7 @@ from tqdm import tqdm
 from test_models import performance
 from NeuralNet import Net
 
-def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, output = True):
+def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, create_output = True):
     if torch.cuda.is_available():
       dev = "cuda:" + str(cuda)
     else:
@@ -69,7 +69,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
         loss_test.append(test_loss)
 
         accuracy = [[],[]]
-        if output:
+        if create_output:
             if (epoch+1)%2 == 0:
                 loss_test = np.array(loss_test)
                 loss_train = np.array(loss_train)
@@ -89,4 +89,4 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
         torch.save(net, name+"model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
-    training(name = "TEST", cuda=0, batch_size=16, num_epochs=10, lr=1e-4, output = True)
+    training(name = "TEST", cuda=0, batch_size=16, num_epochs=10, lr=1e-4, create_output = True)
