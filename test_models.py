@@ -51,6 +51,8 @@ def performance(lr="e-5"):
         test_output = model(x_test)
         #print("output",test_output)
         #print("labels",y_test.data)
+        print(test_output.cpu().detach().numpy())
+        print(y_test.cpu().detach().numpy())
         accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-y_test.cpu().detach().numpy())
 
     print(accuracy/len(test_data))
