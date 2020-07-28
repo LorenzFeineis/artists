@@ -35,8 +35,8 @@ def load_data(Train=True, Test = True):
         test_loader = DataLoader(test_data,batch_size=1)
 
     if Train:
-    train_data = ArtistsPaintingsDataset(root_dir="train_aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
-    train_loader = DataLoader(train_data)
+        train_data = ArtistsPaintingsDataset(root_dir="train_aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+        train_loader = DataLoader(train_data)
 
     if Test and Train:
         return test_data, test_loader, train_data, train_loader
