@@ -22,10 +22,10 @@ args = parser.parse_args()
 artists_info = pd.read_csv('artists.csv')
 
 
-os.chdir('resized') ### working directory is now /resized
+os.chdir('train_set') ### working directory is now /resized
 print(os.getcwd())
 
-print("# of pictures in folder resized:", len(os.listdir()))
+print("# of pictures in folder train_set:", len(os.listdir()))
 
 
 ### Create list of artists
@@ -42,7 +42,6 @@ id2artist = dict(zip
 
 index = 0
 for image in tqdm(os.listdir()):
-
     index +=1
     parts = image.split("_")
     artist = parts[0]
@@ -52,7 +51,7 @@ for image in tqdm(os.listdir()):
         artist = "Albrecht Duerer"
     try:
         image_jpg = Image.open(image)
-
+        image_jpg = image_jpg.convert('RGB')
 
         w,h = image_jpg.size
         w_crop, h_crop = args.scale
@@ -79,7 +78,7 @@ for image in tqdm(os.listdir()):
             name = artist.replace(" ", "_")
             for save_it in (img,vertical,horizontal):
                 file_name = str(name) +"_"+ str(index) + ".jpg"
-                save_it.save("../aug_images/"+file_name)
+                save_it.save("../train_aug_images/"+file_name)
                 index +=1
 
         image_jpg.close()
