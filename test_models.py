@@ -11,8 +11,7 @@ from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 
 
-transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
-                                transforms.ToTensor()])
+
 
 
 
@@ -30,12 +29,14 @@ def plot_losses(lr="e-5"):
 
 
 def load_data(Train=True, Test = True):
+    transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
+                                    transforms.ToTensor()])
     if Test:
-        test_data = ArtistsPaintingsDataset(root_dir="test_aug_images/", transform = transform, mode="Test", artists_idx=artists_idx)
+        test_data = ArtistsPaintingsDataset(root_dir="test_aug_images/", transform = transform, mode="Test")
         test_loader = DataLoader(test_data,batch_size=1)
 
     if Train:
-        train_data = ArtistsPaintingsDataset(root_dir="train_aug_images/", transform = transform, mode="Train", artists_idx=artists_idx)
+        train_data = ArtistsPaintingsDataset(root_dir="train_aug_images/", transform = transform, mode="Train")
         train_loader = DataLoader(train_data)
 
     if Test and Train:
