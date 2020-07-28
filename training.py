@@ -20,15 +20,14 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
     device = torch.device(dev)
     print(device)
 
-    transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
-                                    transforms.ToTensor()])
+    transform = transforms.ToTensor()
 
 
     #artists_idx = [8,13,15,16,19,20,22,30,31,32,46]
     artists_idx = [8,15,20,30]
 
     train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
-    test_data = ArtistsPaintingsDataset(ttransform = transform, mode="Test")
+    test_data = ArtistsPaintingsDataset(transform = transform, mode="Test")
     print(len(train_data), "train images loaded.")
     print(len(test_data), "test images loaded.")
 
