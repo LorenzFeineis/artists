@@ -22,9 +22,9 @@ class ArtistsPaintingsDataset(Dataset):
         self.artists2id = dict(zip(artists_names,artists_ids))
 
         if mode == "Train":
-            self.root_dir = "train_set/"
+            self.root_dir = "train_aug_images/"
         elif mode == "Test":
-            self.root_dir = "test_/set"
+            self.root_dir = "test_aug_images/"
         else:
             print("mode must be \"Train\" or \"Test\"")
 
