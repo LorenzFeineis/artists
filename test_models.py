@@ -26,5 +26,5 @@ artists_idx = [8,15,20,30]
 
 model = torch.load("model_lr_e-4.pt")
 
-test_loss = np.load("test_loss_e-4.npy")
-train_loss = np.load("train_loss_e-4.npy")
+test_loss = np.load("test_loss_e-4.npy",allow_pickle=True)
+train_loss = np.load("train_loss_e-4.npy", allow_pickle=True)
