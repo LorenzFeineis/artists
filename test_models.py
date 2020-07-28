@@ -30,7 +30,7 @@ test_loss = np.load("test_loss_e-4.npy",allow_pickle=True)
 train_loss = np.load("train_loss_e-4.npy", allow_pickle=True)
 
 def plot_losses():
-    fig, axis = plt.subplot(ncols = 2)
+    fig, axis = plt.subplots(ncols = 2)
 
     axis[0].plot(test_loss.values())
     axis[0].plot(train_loss.values())
