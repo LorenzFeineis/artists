@@ -55,8 +55,8 @@ def performance(lr="e-5"):
         #print(prediction)
         #print(y_test.cpu().detach().numpy())
         accuracy += np.count_nonzero(test_output.cpu().detach().numpy()-prediction)
-
-    print(accuracy/len(test_data))
+        print(accuracy)
+    print((len(test_data)-accuracy)/len(test_data))
     #dataiter = iter(test_loader)
     #images, labels = dataiter.next()
     #print(images.shape)
