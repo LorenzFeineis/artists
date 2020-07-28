@@ -46,7 +46,7 @@ def performance(lr="e-5"):
     print(len(test_data), "test images loaded.")
 
     #train_loader = DataLoader(train_data)
-    test_loader = DataLoader(test_data)
+    test_loader = DataLoader(test_data,batch_size=len(test_data))
 
     #train_labels = torch.tensor(train_data.targets)
     test_labels = torch.tensor(test_data.targets)
@@ -55,7 +55,7 @@ def performance(lr="e-5"):
     images, labels = dataiter.next()
     print(images.shape)
     test_output = model(images)
-    print(test_output)
+    print(test_output.shape)
 
 if __name__ == "__main__":
     #plot_losses()
