@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
 
 import torchvision
 from torchvision import transforms, utils
@@ -9,7 +8,6 @@ from torchvision import transforms, utils
 from dataset import ArtistsPaintingsDataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
-from NeuralNet import Net
 import test_models
 
 def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, output = True):
@@ -22,8 +20,6 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
 
     transform = transforms.ToTensor()
 
-
-    #artists_idx = [8,13,15,16,19,20,22,30,31,32,46]
     artists_idx = [8,15,20,30]
 
     train_data = ArtistsPaintingsDataset(transform = transform, mode="Train")
@@ -33,7 +29,6 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
 
     train_loader = DataLoader(train_data, batch_size=batch_size)
     test_loader = DataLoader(test_data)
-
 
     net = Net(size= (256,256), num_classes = 4)
     net.to(device)
@@ -45,6 +40,8 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, outpu
     loss_train = []
     loss_test = []
 
+
+    print("Where am I?")
     for epoch in range(num_epochs):
         print("epoch:",epoch)
         for batch in tqdm(train_loader):
