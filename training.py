@@ -59,7 +59,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
         train_loss = train_loss/denominator
         loss_train.append(train_loss.cpu())
-        print("Mean training loss:", train_loss)
+        print("Mean training loss:", train_loss.cpu())
 
         net.eval()
         test_loss = 0
@@ -70,7 +70,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
             test_loss += loss(test_output.to(device), y_test.to(device)).data
         test_loss = test_loss/len(test_data)
         print("Mean test_loss:", test_loss.cpu())
-        loss_test.append(test_loss)
+        loss_test.append(test_loss.cpu())
 
 
         accuracy = [[],[]]
