@@ -54,7 +54,7 @@ def performance(lr="e-5"):
         #print("labels",y_test.data)
         #print(prediction)
         #print(y_test.cpu().detach().numpy())
-        if test_output.cpu().detach().numpy()==prediction:
+        if np.array([test_output.cpu().detach().numpy()==prediction]).any:
             accuracy += 1
         print(accuracy)
     print((len(test_data)-accuracy)/len(test_data))
