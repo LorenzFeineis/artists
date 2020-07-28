@@ -8,10 +8,10 @@ def output_size(input_size, kernel_size, stride = 1, padding = 0):
     return (out_width, out_height)
 
 class Net(nn.Module):
-    def __init__(self,size=(256,256),norm_size=5, num_classes = 10):
+    def __init__(self,size=(256,256),norm_size=5, num_classes = 10,cuda = 0):
         self.size = size
         if torch.cuda.is_available():
-          dev = "cuda:0"
+          dev = "cuda:{}".format(cuda)
         else:
           dev = "cpu"
         self.device = torch.device(dev)
