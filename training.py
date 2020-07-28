@@ -46,6 +46,8 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
     print("Where am I?")
     for epoch in range(num_epochs):
         print("epoch:",epoch)
+        train_loss = 0
+        denominator = 0
         for batch in tqdm(train_loader):
             x_train, y_train = batch
             y_train = y_train[0]
@@ -54,19 +56,26 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
             net.train()
             output = net(x_train.to(device))
             training_loss = loss(output.to(device), y_train.to(device))
+            train_loss += training_loss.data
+            denominator += 1
             training_loss.backward()
             optimizer.step()
-        print("training loss:", training_loss)
-        loss_train.append(training_loss)
+
+        train_loss = train_loss/denominator
+        loss_train.append(train_loss)
+        print("Mean training loss:", train_loss)
 
         net.eval()
+        test_loss = 0
         for batch in test_loader:
             x_test, y_test = batch
             y_test = y_test[0]
             test_output = net(x_test.to(device))
-            test_loss = loss(test_output.to(device), y_test.to(device))
-        print("test_loss:", test_loss)
+            test_loss += loss(test_output.to(device), y_test.to(device)).data
+        test_loss = test_loss/len(test_data)
+        print("Mean test_loss:", test_loss)
         loss_test.append(test_loss)
+
 
         accuracy = [[],[]]
         if create_output:
