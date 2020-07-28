@@ -57,7 +57,7 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         model = torch.load("model_lr_{}.pt".format(lr))
     else:
         model = load_model
-        
+
     model.eval()
 
     test_accuracy = 0
@@ -77,6 +77,8 @@ def performance(lr="e-5", load_model = None, data = "Load"):
         train_output = model(x_train)
         prediction = np.argmax(train_output.cpu().detach().numpy())
         ground_truth = y_train.cpu().detach().numpy()
+        print("prediction:", prediction)
+        print("ground truth:", ground_truth)
         if ground_truth[0]==prediction:
             train_accuracy += 1
 
