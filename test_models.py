@@ -15,9 +15,9 @@ from tqdm import tqdm
 
 
 
-def plot_losses(lr="e-5"):
-    test_loss = np.load("test_loss_{}.npy".format(lr),allow_pickle=True)
-    train_loss = np.load("train_loss_{}.npy", allow_pickle=True)
+def create_plots(name,lr=1e-4,batch_size=16):
+    test_loss = np.load(name+"_test_loss_{}.npy".format(str(lr)),allow_pickle=True)
+    train_loss = np.load(name+"_train_loss_{}.npy".format(str(lr)), allow_pickle=True)
 
     fig, axis = plt.subplots(ncols = 2)
 
@@ -25,8 +25,18 @@ def plot_losses(lr="e-5"):
     axis[0].set(title = "test loss",xlabel="epochs", ylabel="CELoss")
     axis[1].plot(train_loss)
     axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
-    plt.savefig("losses_{}.png")
+    plt.savefig(name+"_losses.pdf")
 
+    fig, axis = plt.subplots(ncols=2)
+    accuracy = np.load(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)))
+    train_acc = accuracy[0]
+    test_acc = accuracy[1]
+    axis[0].plot(np.arange(50,1000,50),test_acc)
+    axis[0].set(title="Test accuracy", x_label="epochs", ylabel="Test accuracy")
+    axis[1].plot(np.arange(50,1000,50),train_acc)
+    axis[1].set(title="Train accuracy",xlabel="epochs",ylabel="Train accuracy")
+
+    plt.savefig(name+"_accuracy.pdf")
 
 def load_data(Train=True, Test = True):
     transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
@@ -83,5 +93,6 @@ def performance(lr="e-5", load_model = None, data = "Load"):
     return train_accuracy/len(train_data), test_accuracy/len(test_data)
 
 if __name__ == "__main__":
-    #plot_losses()
-    performance(lr="e-5")
+    create_plots(name ="NoSG1",lr=1e-4,batch_size=16)
+    create_plots(name ="SG1",lr=1e-4,batch_size=16)
+    #performance(lr="e-5")
