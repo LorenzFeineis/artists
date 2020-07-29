@@ -43,7 +43,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
 
     loss_train = []
     loss_test = []
-
+    accuracy = [[],[]]
     for epoch in range(num_epochs):
         print("epoch:",epoch)
         train_loss = 0
@@ -77,7 +77,7 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
         loss_test.append(test_loss.cpu())
 
 
-        accuracy = [[],[]]
+
         if create_output:
             if (epoch+1)%50 == 0:
                 np.save(name+"_test_loss_{}.npy".format(str(lr)), np.array(loss_test))
