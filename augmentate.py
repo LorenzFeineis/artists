@@ -23,6 +23,7 @@ artists_info = pd.read_csv('artists.csv')
 
 
 os.chdir('train_set') ### working directory is now /resized
+
 print(os.getcwd())
 
 print("# of pictures in folder train_set:", len(os.listdir()))
