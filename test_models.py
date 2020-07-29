@@ -29,15 +29,10 @@ def create_plots(name,lr=1e-4,batch_size=16):
 
     fig, axis = plt.subplots(ncols=2)
     accuracy = np.load(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)))
-    print(accuracy.shape)
     train_acc = accuracy[0]
     test_acc = accuracy[1]
-    axis[0].plot(np.arange(50,1000,50),test_acc)
-    axis[0].set(title="Test accuracy", x_label="epochs", ylabel="Test accuracy")
-    axis[1].plot(np.arange(50,1000,50),train_acc)
-    axis[1].set(title="Train accuracy",xlabel="epochs",ylabel="Train accuracy")
-
-    plt.savefig(name+"_accuracy.pdf")
+    print(name, "Train accuracy", train_acc)
+    print(name, "Test accuracy", test_acc)
 
 def load_data(Train=True, Test = True):
     transform = transforms.Compose([transforms.CenterCrop(size=(256,256)),
