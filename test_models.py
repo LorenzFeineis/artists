@@ -29,6 +29,7 @@ def create_plots(name,lr=1e-4,batch_size=16):
 
     fig, axis = plt.subplots(ncols=2)
     accuracy = np.load(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)))
+    print(accuracy.shape)
     train_acc = accuracy[0]
     test_acc = accuracy[1]
     axis[0].plot(np.arange(50,1000,50),test_acc)
