@@ -1,4 +1,4 @@
-import torch
+ import torch
 import numpy as np
 from PIL import Image
 
@@ -10,6 +10,20 @@ from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from test_models import performance
 from NeuralNet import Net
+import argparse
+
+
+parser = argparse.ArgumentParser(description='arguments for classification')
+parser.add_argument('--name', type=str, default='SG2', metavar='X', help='Name of the model')
+parser.add_argument('--batch_size', type=int, default=16, metavar='X', help='batch size for training')
+parser.add_argument('--lr', type=float, default=0.0001, metavar='X', help='learning rate')
+parser.add_argument('--num_epochs', type=int, default=10, metavar='X', help='Number of epochs')
+parser.add_argument('--output', type=bool, default=False, metavar='X', help='boolean: True if output should be generated.')
+parser.add_argument('--SinGAN_data', type=bool, default=False, metavar='X', help='boolean: True of generated data from SinGAN should be included in training.')
+parser.add_argument('--cuda', type=int, default=0, metavar='X', help='index of gpu to use.')
+
+args = parser.parse_args()
+
 
 def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, create_output = True, SG = False):
     if torch.cuda.is_available():
@@ -94,5 +108,14 @@ def training(name, batch_size = 256, lr=1e-4, num_epochs = 1000, cuda = 0, creat
         torch.save(net, name+"_model_lr_{}_batch_{}.pt".format(str(lr),str(batch_size)))
 
 if __name__ == "__main__":
+    name = args.name
+    SG = args.SinGAN_data
+    cuda = args.cuda
+    batch_size = args.batch_size
+    lr = args.lr
+    num_epochs = args.num_epochs
+    create_output = args.output
+
+    training(name=name, batch_size=batch_size,lr=lr, num_epochs=num_epochs, cuda=cuda, create_output=create_output, SG=SG,)
     #training(name = "NoSG1", cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
-    training(name = "SG1", SG=True, cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
+    #training(name = "SG1", SG=True, cuda=0, batch_size=16, num_epochs=1000, lr=1e-4, create_output = True)
