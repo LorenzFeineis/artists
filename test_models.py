@@ -19,15 +19,17 @@ def create_plots(name,lr=1e-4,batch_size=16):
     test_loss = np.load(name+"_test_loss_{}.npy".format(str(lr)),allow_pickle=True)
     train_loss = np.load(name+"_train_loss_{}.npy".format(str(lr)), allow_pickle=True)
 
-    fig, axis = plt.subplots(ncols = 2)
+    fig, axis = plt.subplots()
 
-    axis[0].plot(test_loss)
-    axis[0].set(title = "test loss",xlabel="epochs", ylabel="CELoss")
-    axis[1].plot(train_loss)
-    axis[1].set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
-    plt.savefig(name+"_losses.pdf")
+    axis.plot(test_loss)
+    axis.set(title = "test loss",xlabel="epochs", ylabel="CELoss")
+    plt.savefig(name+"_test_loss.pdf")
 
-    fig, axis = plt.subplots(ncols=2)
+    fig, axis = plt.subplots()
+    axis.plot(train_loss)
+    axis.set(title = "trainings loss",xlabel="epochs", ylabel="CELoss")
+    plt.savefig(name+"_training_loss.pdf")
+
     accuracy = np.load(name+"_accuracy_lr_{}_batch_{}.npy".format(str(lr),str(batch_size)))
     train_acc = accuracy[0]
     test_acc = accuracy[1]
