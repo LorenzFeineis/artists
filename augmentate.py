@@ -95,7 +95,7 @@ def augmentate(source,target,crops,scale,color_convert):
                 name = artist.replace(" ", "_")
                 for save_it in (img,vertical,horizontal):
                     file_name = str(name) +"_"+ str(index) + ".jpg"
-                    save_it.save(target+file_name)
+                    save_it.save(target+"/"+file_name)
                     index +=1
 
             image_jpg.close()
